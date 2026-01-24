@@ -46,9 +46,19 @@
 
     // Close mobile menu when clicking a link
     document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
+      link.addEventListener('click', (e) => {
+        // Fechar menu mobile
         hamburger.classList.remove('active');
         navLinks.classList.remove('active');
+        
+        // Obter o ID da seção alvo
+        const targetId = link.getAttribute('href').substring(1); // Remove o #
+        const targetSection = document.getElementById(targetId);
+        
+        if (targetSection) {
+          // Fazer scroll suave para a seção
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
       });
     });
 
@@ -60,7 +70,7 @@
       let current = '';
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        if (scrollY >= sectionTop - 200) {
+        if (scrollY >= sectionTop - 60) {
           current = section.getAttribute('id');
         }
       });
